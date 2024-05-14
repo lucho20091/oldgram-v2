@@ -1,8 +1,5 @@
 import { postsData } from './posts.js'
 
-const commentSection = document.getElementById('comment-section');
-const sendCommentBtn = document.getElementById('send-comment');
-const inputComment = document.getElementById('input-comment');
 
 // get localstorage item
 const nameFromLocalStorage = JSON.parse(localStorage.getItem('username'))
@@ -22,14 +19,7 @@ const profileUser = document.getElementById('profile-user');
 // close sesion btn and modal
 const closeBtn = document.getElementById('close-sesion');
 const closeModal = document.getElementById('modal-close-sesion');
-// get like element
-const likeHeart = document.getElementById('like-heart');
 
-// get all image
-const postImage = document.getElementById('post-image');
-
-// get p for likes
-const likes1 = document.getElementById('likes1');
 
 
 function getPostsArray(posts){
@@ -91,15 +81,6 @@ renderPosts(postsData)
 
 
 
-// like logic
-likeHeart.addEventListener('click', () => {
-    likeHeart.classList.toggle('active');
-    if (likeHeart.classList.contains('active')){
-        likes1.innerHTML = `${nameFromLocalStorage} and 200 likes`
-    } else {
-        likes1.innerHTML = `200 likes`
-    }
-})
 
 
 function likeInteraction(posts){
@@ -135,49 +116,14 @@ function likeInteraction(posts){
         if (postImgEl){
             postImgEl.addEventListener('dblclick', () =>{
                 likeHeartEl.classList.toggle('active')
-                console.log(`you clicked on this`)
                 })
             }        
     }
 
-    // for (let i = 0; i < likeHeartArr.length; i++) {
-    //     const postImgEl = document.getElementById(postImg[i])
-    //     const likeHeartEl = document.getElementById(likeHeartArr[i])
-    //     if (postImgEl){
-    //         postImgEl.addEventListener('dblclick', () =>{
-    //             likeHeartEl.classList.toggle('active')
-    //         })
-    //     }
-    // }
 
 }
 
 likeInteraction(postsData)
-
-
-
-
-
-
-
-
-
-
-
-
-
-// click on the images like
-postImage.addEventListener('dblclick', likeHandler)
-
-
-function likeHandler(){
-    likeHeart.classList.toggle('active');
-    if (likeHeart.classList.contains('active')){
-        likes1.innerHTML = `${nameFromLocalStorage} and 200 likes`
-    } else {
-        likes1.innerHTML = `200 likes`
-    }
-}
 
 // setting up firebase 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
@@ -216,43 +162,86 @@ if (nameFromLocalStorage){
 } 
 
 
+function sendComments(){
+    const postsVar = getPostsArray(postsData)
+    const inputArr = []
+    const btnArr = []
+    const commentArr = []
 
-
-// logic for each post
-sendCommentBtn.addEventListener('click', () =>{
-    //object of what we want to send
-    let myObj = {
-        id: idFromLocalStorage,
-        name: nameFromLocalStorage,
-        comment: inputComment.value,
-        html: "commentSection"
+    for (let post of postsVar){
+        inputArr.push(`input-comment-${post.id}`)
+        btnArr.push(`send-comment-${post.id}`)
+        commentArr.push(`commentSection-${post.id}`)
     }
-    if (!inputComment.value == ''){
-        push(oldgramInDB, myObj)
+
+    for (let i = 0; i < inputArr.length; i++) {
+        const inputEl = document.getElementById(inputArr[i])
+        const btnEl = document.getElementById(btnArr[i])
+        // const commentEl = document.getElementById(commentArr[i])
+
+        if (btnEl){
+            btnEl.addEventListener('click', () => {
+                let myObj = {
+                    id: idFromLocalStorage,
+                    name: nameFromLocalStorage,
+                    comment: inputEl.value,
+                    html: `${commentArr[i]}`,
+                }
+
+                if (!inputEl.value == ""){
+                    push(oldgramInDB, myObj)
+                }
+
+                inputEl.value = ""
+            })
+        }
     }
-    inputComment.value = '';
-})
+}
 
-
+sendComments() 
 // logic to get data from DB
 onValue(oldgramInDB, function(snapshot){
     if (snapshot.exists()){
         let itemsArray = Object.entries(snapshot.val())
-        clearCommentSections(commentSection)
+        clearCommentSections()
         
-        for (let i = 0; i < itemsArray.length; i++){
-            let currentItem = itemsArray[i]
-            let currentItemHTML = itemsArray[i][1].html
-            if (currentItemHTML === 'commentSection'){
-                appendComments(currentItem, commentSection)   
-        }}
+        const postsVar = getPostsArray(postsData)
+        const commentSectionArr = []
+
+        for (let post of postsVar){
+            commentSectionArr.push(`commentSection-${post.id}`)
+        }
+
+        for (let item of itemsArray){
+            if (item[1].html === "commentSection" || item[1].html == commentSectionArr[0]){
+                const commentSectionEl = document.getElementById(commentSectionArr[0])
+                appendComments(item, commentSectionEl)
+            } else if (item[1].html === "commentSection2"|| item[1].html == commentSectionArr[1]){
+                const commentSectionEl = document.getElementById(commentSectionArr[1])
+                appendComments(item, commentSectionEl)
+            } else if (item[1].html === "commentSection3" || item[1].html == commentSectionArr[2]){
+                const commentSectionEl = document.getElementById(commentSectionArr[2])
+                appendComments(item, commentSectionEl)
+            } 
+        }
     } else {
-        push(oldgramInDB, 'hello') //
+        push(oldgramInDB, "hello")
     }
 })
 
-function clearCommentSections(one){
-    one.innerHTML = ''
+function clearCommentSections(){
+    const postsVar = getPostsArray(postsData)
+    const commentsArr = []
+    for (let post of postsVar){
+        commentsArr.push(`commentSection-${post.id}`)
+    }
+    for (let i = 0; i < commentsArr.length; i++){
+        const commentsEl = document.getElementById(commentsArr[i])
+        if (commentsEl){        
+            commentsEl.innerHTML = ''
+        }
+            
+    }
 }
 
 function appendComments(item, commentSectionEl){
@@ -260,6 +249,7 @@ function appendComments(item, commentSectionEl){
     let itemComment = item[1].comment
     let itemName = item[1].name
     let itemUserID = item[1].id
+
     let newEl = document.createElement('div')
     newEl.className = 'flex-comment'
     newEl.innerHTML = `
