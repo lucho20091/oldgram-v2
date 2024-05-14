@@ -1,3 +1,5 @@
+import { postsData } from './posts.js'
+
 const commentSection = document.getElementById('comment-section');
 const sendCommentBtn = document.getElementById('send-comment');
 const inputComment = document.getElementById('input-comment');
@@ -29,6 +31,66 @@ const postImage = document.getElementById('post-image');
 // get p for likes
 const likes1 = document.getElementById('likes1');
 
+
+function getPostsArray(posts){
+    const postsArray = []
+    for (let post of posts){
+            postsArray.push(post) 
+    }
+    return postsArray
+}
+
+function renderPosts(posts){
+    let postItems = ``
+    const postsID = getPostsArray(posts)
+    for (let post of postsID){
+        postItems += `
+        <div class="container2">
+        <div class="username">
+            <div class="username-picture">
+                <img src="./images/${post.avatarImage}" class="avatar" alt="this is ${post.id} avatar">
+            </div>
+            <div class="username-text">
+                <p class="bold">${post.namePost}</p>
+                <p>${post.userLocation}</p>
+            </div>
+        </div>
+        <div class="image" id="post-image-${post.id}">
+            <img src="./images/${post.image}" alt="a portrait of ${post.id}">
+        </div>
+        <div class="like-icons">
+            <div id="like-heart-${post.id}"><i class="fa-regular fa-heart"></i></div>
+            <div><i class="fa-regular fa-comment"></i></div>
+            <div><i class="fa-regular fa-paper-plane"></i></div>
+        </div>
+        <div class="people-comments">
+            <p id="likes-${post.id}">${post.likesCounter} likes</p>
+            <p><span class="bold">${post.userNamePost}</span>${post.userNameTextPost}</p>
+            <div class="divider"></div>
+            <div class="comment-section" id="commentSection-${post.id}"></div>
+            <div class="comment-div">
+                <input 
+                type="text" 
+                class="comment"
+                id="input-comment-${post.id}"
+                placeholder="Leave a comment">
+                <button id="send-comment-${post.id}">Send</button>
+            </div>
+        </div>
+    </div>
+    <div class="border"></div>` 
+        main.innerHTML = postItems    
+    }
+}
+
+
+renderPosts(postsData)
+
+
+
+
+
+
 // like logic
 likeHeart.addEventListener('click', () => {
     likeHeart.classList.toggle('active');
@@ -38,6 +100,70 @@ likeHeart.addEventListener('click', () => {
         likes1.innerHTML = `200 likes`
     }
 })
+
+
+function likeInteraction(posts){
+    const postsVar = getPostsArray(posts)
+    const likeHeartArr = []
+    const likesArr = []
+    const counterArr = []
+    const postImgArr = []
+
+    for (let post of postsVar){
+        likeHeartArr.push(`like-heart-${post.id}`)
+        likesArr.push(`likes-${post.id}`)
+        postImgArr.push(`post-image-${post.id}`)
+
+        counterArr.push(`${post.likesCounter}`)
+    }
+    for (let i = 0; i < likeHeartArr.length; i++) {
+        const likeHeartEl = document.getElementById(likeHeartArr[i])
+        const likesEl = document.getElementById(likesArr[i])
+        const counter = counterArr[i]
+        const postImgEl = document.getElementById(postImgArr[i])
+
+        if (likeHeartEl){
+            likeHeartEl.addEventListener('click', () =>{ 
+            likeHeartEl.classList.toggle('active')
+            if (likeHeartEl.classList.contains('active')){
+                likesEl.innerHTML = `${nameFromLocalStorage} and ${counter} likes`
+            } else {
+                likesEl.innerHTML = `${counter} likes`
+            }
+            })
+        }
+        if (postImgEl){
+            postImgEl.addEventListener('dblclick', () =>{
+                likeHeartEl.classList.toggle('active')
+                console.log(`you clicked on this`)
+                })
+            }        
+    }
+
+    // for (let i = 0; i < likeHeartArr.length; i++) {
+    //     const postImgEl = document.getElementById(postImg[i])
+    //     const likeHeartEl = document.getElementById(likeHeartArr[i])
+    //     if (postImgEl){
+    //         postImgEl.addEventListener('dblclick', () =>{
+    //             likeHeartEl.classList.toggle('active')
+    //         })
+    //     }
+    // }
+
+}
+
+likeInteraction(postsData)
+
+
+
+
+
+
+
+
+
+
+
 
 
 // click on the images like
