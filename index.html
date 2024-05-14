@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..900&display=swap" rel="stylesheet">
+    <title>Oldgram</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <img src="./images/logo.png" class="logo" alt="this is the logo">
+                <div class="flex">
+                    <p id="username-name"></p>
+                    <img src="./images/user.png" class="user" id="profile-user" alt="this is the user">
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container2">
+            <div class="username">
+                <div class="username-picture">
+                    <img src="./images/avatar-vangogh.jpg" class="avatar" alt="this is vangogh avatar">
+                </div>
+                <div class="username-text">
+                    <p class="bold">Vincent van Gogh</p>
+                    <p>Zudert, Netherlands</p>
+                </div>
+            </div>
+            <div class="image" id="post-image">
+                <img src="./images/post-vangogh.jpg" alt="a portrait of vangogh">
+            </div>
+            <div class="like-icons">
+                <div id="like-heart"><i class="fa-regular fa-heart"></i></div>
+                <div><i class="fa-regular fa-comment"></i></div>
+                <div><i class="fa-regular fa-paper-plane"></i></div>
+            </div>
+            <div class="people-comments">
+                <p id="likes1">200 likes</p>
+                <p><span class="bold">Vincent1312 </span>Just a normal selfie</p>
+                <div class="divider"></div>
+                <div class="comment-section" id="comment-section"></div>
+                <div class="comment-div">
+                    <input 
+                    type="text" 
+                    class="comment"
+                    id="input-comment"
+                    placeholder="Leave a comment">
+                    <button id="send-comment">Send</button>
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div class="container2">
+            <div class="username">
+                <div class="username-picture">
+                    <img src="./images/avatar-courbet.jpg" class="avatar" alt="this is courbet avatar">
+                </div>
+                <div class="username-text">
+                    <p class="bold">Gustave Courbet</p>
+                    <p>Ornans, France</p>
+                </div>
+            </div>
+            <div class="image" id="post-image2">
+                <img src="./images/post-courbet.jpg" alt="a portrait of courbet">
+            </div>
+            <div class="like-icons">
+                <div id="like-heart2"><i class="fa-regular fa-heart"></i></div>
+                <div><i class="fa-regular fa-comment"></i></div>
+                <div><i class="fa-regular fa-paper-plane"></i></div>
+            </div>
+            <div class="people-comments">
+                <p id="likes2">240 likes</p>
+                <p><span class="bold">Gus2024 </span>I'm feeling a bit stressed tbh</p>
+                <div class="divider"></div>
+                <div class="comment-section" id="comment-section2"></div>
+                <div class="comment-div">
+                    <input 
+                    type="text" 
+                    class="comment"
+                    id="input-comment2"
+                    placeholder="Leave a comment">
+                    <button id="send-comment2">Send</button>
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+        <div class="container2">
+            <div class="username">
+                <div class="username-picture">
+                    <img src="./images/avatar-ducreux.jpg" class="avatar" alt="this is vangogh avatar">
+                </div>
+                <div class="username-text">
+                    <p class="bold">Joseph Ducreux</p>
+                    <p>Paris, France</p>
+                </div>
+            </div>
+            <div class="image" id="post-image3">
+                <img src="./images/post-ducreux.jpg" alt="a portrait of ducreux">
+            </div>
+            <div class="like-icons">
+                <div id="like-heart3"><i class="fa-regular fa-heart"></i></div>
+                <div><i class="fa-regular fa-comment"></i></div>
+                <div><i class="fa-regular fa-paper-plane"></i></div>
+            </div>
+            <div class="people-comments">
+                <p id="likes3">499 likes</p>
+                <p><span class="bold">jd2313 </span>gm friends! which coin are You stacking up today??</p>
+                <div class="divider"></div>
+                <div class="comment-section" id="comment-section3"></div>
+                <div class="comment-div">
+                    <input 
+                    type="text" 
+                    class="comment"
+                    id="input-comment3"
+                    placeholder="Leave a comment">
+                    <button id="send-comment3">Send</button>
+                </div>
+            </div>
+        </div>
+        <div class="border"></div>
+
+    </main>
+    <div class="modal" id="modal">
+        <div class="container">
+                <img src="./images/logo.png" class="logo" alt="this is the logo">
+        </div>
+        <form>
+            <label for="username">Create Account</label>
+            <input 
+            type="text"
+            class="username"
+            id="username"
+            name="username"
+            placeholder="username">
+            <button id="sign-in">Sign In</button>
+        </form>
+    </div>
+    <div class="modal-close-sesion hidden" id="modal-close-sesion">
+        <div class="flex-modal-close">
+            <button id="close-sesion">Close Sesion</button>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script src="https://kit.fontawesome.com/183ef109bd.js" crossorigin="anonymous"></script>
+    <script src="script.js" type="module"></script>
+</body>
+</html>
